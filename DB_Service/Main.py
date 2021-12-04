@@ -1,24 +1,16 @@
 from flask import Flask
 from sqlalchemy import text
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from database.database_base import session_factory
+import database.modell.Recipe as Recipe
 
-engine = create_engine('mysql://root:root@localhost:3307/test_db')
-_SessionFactory = sessionmaker(bind=engine)
-Base = declarative_base()
 app = Flask(__name__)
-
-def session_factory():
-    Base.metadata.create_all(engine)
-    return _SessionFactory()
 
 @app.route("/recipe")
 def get_recipe():
-    commit()
-    test = engine.connect().execute(text("SELECT title, ingredients, process FROM some_table"))
-    return test
-
+    session=session_factory()
+    response = session.query(Recipe)
+    session.close()
+    return response
 
 @app.route("/comments")
 def get_comments():
@@ -39,3 +31,5 @@ def commit():
               "process": "Dobald ossze, oszt fozzed"}]
         )
         conn.commit()
+if __name__ == "__main__":
+    app.run()
