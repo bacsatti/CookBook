@@ -1,15 +1,4 @@
-from sqlalchemy import Column, String
-from sqlalchemy.sql import base
-from sqlalchemy.sql.sqltypes import Integer
-
-class Recipe(base):
-    __tablename__: "Recipe"
-
-    id=Column(Integer, primary_key=True)
-    title=Column('title', String)
-    ingredients=Column('ingredients', String)
-    process=Column('process', String)
-
+class Recipe:
     def __init__(self, title, ingredients, process):
         self.title = title
         self.ingredients = ingredients
