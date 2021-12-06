@@ -17,4 +17,9 @@ public class Recipe {
     private List<String> ingredients;
     private String process;
 
+    public Recipe(String title, List<String> ingredients, String process) {
+        this.title = title;
+        this.ingredients = ingredients;
+        this.process = process;
+    }
 }
