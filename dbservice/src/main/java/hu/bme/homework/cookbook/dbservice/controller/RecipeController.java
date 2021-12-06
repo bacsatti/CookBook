@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Repository
-@EnableJpaRepositories
 @RequestMapping("/recipe")
 public class RecipeController {
 
@@ -25,14 +23,13 @@ public class RecipeController {
 
     }
     @GetMapping("/{title}")
-    @ResponseBody
     public Recipe getOne(@PathVariable("title") String title){
 
         return recipeRepository.getRecipeByTitle(title);
 
     }
-    @PostMapping(value = "/add", consumes = "MediaType.APPLICATION_JSON_VALUE", produces = "MediaType.APPLICATION_JSON_VALUE")
-    public void createRecipe(@RequestBody Recipe recipe) {
-        recipeRepository.saveRecipe(recipe);
+    @PostMapping("/add")
+    public Recipe addReipce(@RequestBody Recipe recipe) {
+        return recipeRepository.save(recipe);
     }
 }

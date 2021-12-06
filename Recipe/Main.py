@@ -16,17 +16,19 @@ def get_recipes():
         print(recipe)
 
 
-def get_recipe():
+def get_recipe(title):
     print("Get one specific recipe!")
-    temp = "Pho"
-    data = requests.get(url+temp).json()
-
+    data = requests.get(url+title).json()
     print(data)
 
 
-def put_recipe():
-    print("putting recipe in database!")
+def post_recipe():
+    print("post recipe to database!")
+    temp = Recipe("Sajtostangli",["sajt","tangli"], "Whatever cause i can't eat it.")
+    requests.post(url+"data", data={'title': temp.title, 'ingredients': temp.ingredients, 'process': temp.process});
 
 
 get_recipes()
-get_recipe()
+get_recipe("Pho")
+post_recipe()
+get_recipe("Sajtostangli")

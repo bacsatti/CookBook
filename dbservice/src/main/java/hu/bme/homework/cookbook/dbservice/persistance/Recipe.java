@@ -1,12 +1,16 @@
 package hu.bme.homework.cookbook.dbservice.persistance;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Recipe {
 
     @Id
@@ -17,9 +21,4 @@ public class Recipe {
     private List<String> ingredients;
     private String process;
 
-    public Recipe(String title, List<String> ingredients, String process) {
-        this.title = title;
-        this.ingredients = ingredients;
-        this.process = process;
-    }
 }
