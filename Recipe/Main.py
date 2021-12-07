@@ -25,7 +25,12 @@ def get_recipe(title):
 def post_recipe():
     print("post recipe to database!")
     temp = Recipe("Sajtostangli",["sajt","tangli"], "Whatever cause i can't eat it.")
-    requests.post(url+"data", data={'title': temp.title, 'ingredients': temp.ingredients, 'process': temp.process});
+    payload = {
+        'title': temp.title,
+        'process': temp.process,
+        'ingredients': temp.ingredients
+    }
+    print(requests.post(url+"add", json=payload).json())
 
 
 get_recipes()
