@@ -1,39 +1,48 @@
 import requests
-from Recipe import Recipe
+from flask import Flask
+from flask import request
 
-url = 'http://localhost:8080/recipe/'
+base_url = 'http://localhost:8080/recipe'
+app = Flask(__name__)
 
-
+@app.route('/')
 def get_recipes():
-
-    print("Get all the recipes!")
-    datas = requests.get(url).json()
-    recipes = [Recipe]
-    for data in datas:
-        recipes.append(Recipe(data['title'], data['ingredients'], data['process']))
-
-    for recipe in recipes:
-        print(recipe)
-
-
-def get_recipe(title):
-    print("Get one specific recipe!")
-    data = requests.get(url+title).json()
-    print(data)
-
-
-def post_recipe():
-    print("post recipe to database!")
-    temp = Recipe("Sajtostangli",["sajt","tangli"], "Whatever cause i can't eat it.")
-    payload = {
-        'title': temp.title,
-        'process': temp.process,
-        'ingredients': temp.ingredients
+    print('Get all the recipes!')
+    datas = requests.get(f'{base_url}/').json()
+    return {
+        'statusCode': 200,
+        'body': datas
     }
-    print(requests.post(url+"add", json=payload).json())
 
 
-get_recipes()
-get_recipe("Pho")
-post_recipe()
-get_recipe("Sajtostangli")
+@app.route('/<int:recipe_id>')
+def get_recipe(recipe_id):
+    print('Get one specific recipe!')
+    data = requests.get(f"{base_url}/{recipe_id}").json()
+
+    return {
+        'statusCode': 200,
+        'body': data
+    }
+
+
+@app.route("/", methods=['POST'])
+def post_recipe():
+    print('post recipe to database!')
+    form_data = request.json
+
+    payload = {
+        'title': form_data['title'],
+        'process': form_data['process'],
+        'ingredients': form_data['ingredients']
+    }
+
+    data = requests.post(base_url + '/add', json=payload).json()
+    return {
+        'statusCode': 200,
+        'body': data
+    }
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
