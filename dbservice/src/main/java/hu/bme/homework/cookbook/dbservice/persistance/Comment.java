@@ -18,6 +18,9 @@ public class Comment {
     private Long id;
     private String username;
     private String content;
-    private String date;
+    private String date; //TODO use Instant?
 
+    @ManyToOne
+    @JoinColumn(name="recipe_id", nullable=false)
+    private Recipe recipe;
 }

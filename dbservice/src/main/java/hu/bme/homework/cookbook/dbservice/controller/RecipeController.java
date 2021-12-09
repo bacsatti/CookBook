@@ -1,5 +1,7 @@
 package hu.bme.homework.cookbook.dbservice.controller;
 
+import hu.bme.homework.cookbook.dbservice.dto.RecipeCreateDto;
+import hu.bme.homework.cookbook.dbservice.dto.RecipeDto;
 import hu.bme.homework.cookbook.dbservice.persistance.Recipe;
 import hu.bme.homework.cookbook.dbservice.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +17,17 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping("/")
-    public List<Recipe> getAll(){
+    public List<RecipeDto> getAll(){
         return recipeService.getAllRecipes();
     }
 
     @GetMapping("/{id}")
-    public Recipe getRecipeById(@PathVariable("id") Long id){
+    public RecipeDto getRecipeById(@PathVariable("id") Long id){
         return recipeService.getRecipeById(id);
     }
 
     @PostMapping("/add")
-    public Recipe addRecipe(@RequestBody Recipe recipe) {
+    public Recipe addRecipe(@RequestBody RecipeCreateDto recipe) {
         return recipeService.addRecipe(recipe);
     }
 }
