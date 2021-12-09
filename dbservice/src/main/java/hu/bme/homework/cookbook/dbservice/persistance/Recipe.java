@@ -21,4 +21,7 @@ public class Recipe {
     private List<String> ingredients;
     private String process;
 
+    @OneToMany(mappedBy = "recipe")
+    private List<Comment> comments;
+
 }
