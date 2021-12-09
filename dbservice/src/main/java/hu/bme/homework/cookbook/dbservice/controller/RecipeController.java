@@ -1,7 +1,7 @@
 package hu.bme.homework.cookbook.dbservice.controller;
 
 import hu.bme.homework.cookbook.dbservice.persistance.Recipe;
-import hu.bme.homework.cookbook.dbservice.persistance.RecipeRepository;
+import hu.bme.homework.cookbook.dbservice.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,22 +12,20 @@ import java.util.List;
 public class RecipeController {
 
     @Autowired
-    private RecipeRepository recipeRepository;
+    private RecipeService recipeService;
 
     @GetMapping("/")
     public List<Recipe> getAll(){
-
-        return recipeRepository.findAll();
-
+        return recipeService.getAllRecipes();
     }
-    @GetMapping("/{title}")
-    public Recipe getOne(@PathVariable("title") String title){
 
-        return recipeRepository.getRecipeByTitle(title);
-
+    @GetMapping("/{id}")
+    public Recipe getRecipeById(@PathVariable("id") Long id){
+        return recipeService.getRecipeById(id);
     }
+
     @PostMapping("/add")
-    public Recipe addReipce(@RequestBody Recipe recipe) {
-        return recipeRepository.save(recipe);
+    public Recipe addRecipe(@RequestBody Recipe recipe) {
+        return recipeService.addRecipe(recipe);
     }
 }
