@@ -28,8 +28,7 @@ public class RecipeService {
     }
 
     public RecipeDto getRecipeById(Long id) {
-        Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No such recipe with id ." + id));
+        Recipe recipe = getRecipeEntityById(id);
         return recipeMapper.recipeEntityToDto(recipe);
     }
 
@@ -41,4 +40,8 @@ public class RecipeService {
         return recipeDtos;
     }
 
+    public Recipe getRecipeEntityById(Long id) {
+        return recipeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No such recipe with id ." + id));
+    }
 }

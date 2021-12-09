@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -18,7 +18,7 @@ public class Comment {
     private Long id;
     private String username;
     private String content;
-    private String date; //TODO use Instant?
+    private Instant date;
 
     @ManyToOne
     @JoinColumn(name="recipe_id", nullable=false)
