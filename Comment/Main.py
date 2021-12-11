@@ -1,8 +1,10 @@
 import requests
+from flask import Flask
 from Comment import Comment
 import datetime
 
 url = 'http://localhost:8080/comment/'
+app = Flask(__name__)
 
 def get_comments(title):
 
@@ -26,6 +28,10 @@ def post_comment():
     }
     print(requests.post(url+"add", json=payload).json())
 
+@app.route('/')
+def hello():
+    return 'Hello World!'
 
-post_comment()
-get_comments("Pho")
+
+if __name__ == '__main__':
+    app.run(debug = True, host= '0.0.0.0')

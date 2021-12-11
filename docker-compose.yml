@@ -1,7 +1,6 @@
 version: '3.1'
 
 services:
-
   db:
     image: mysql
     restart: always
@@ -12,3 +11,15 @@ services:
       - "3307:3306"
     volumes:
       - $HOME/Desktop/MySQL-Snippets/school.sql:/school.sql
+  ms-recipe:
+    build: ./Recipe
+    ports:
+      - "5000:5000"
+  ms-comment:
+    build: ./Comment
+    ports:
+      - "5001:5000"
+  db-service:
+    build: ./dbservice
+    ports:
+      - "5002:5000"
