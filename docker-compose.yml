@@ -1,25 +1,31 @@
 version: '3.1'
 
 services:
-  db:
-    image: mysql
-    restart: always
+  mysql-db:
+    image: mysql:8.0.27
+    command: --init-file /data/application/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_db
+      MYSQL_DATABASE: cookbook
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
-      - $HOME/Desktop/MySQL-Snippets/school.sql:/school.sql
+      - ./init.sql:/data/application/init.sql
   ms-recipe:
     build: ./Recipe
     ports:
-      - "5000:5000"
+      - "5002:5002"
   ms-comment:
     build: ./Comment
     ports:
-      - "5001:5000"
+      - "5001:5001"
   db-service:
+    depends_on:
+      - mysql-db
     build: ./dbservice
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL:
+        jdbc:mysql://mysql-db/cookbook?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
     ports:
-      - "5002:5000"
+      - "8080:8080"
