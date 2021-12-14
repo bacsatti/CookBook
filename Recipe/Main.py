@@ -2,7 +2,7 @@ import requests
 from flask import Flask
 from flask import request
 
-base_url = 'http://localhost:8080/recipe'
+base_url = 'http://db-service:8080/recipe'
 app = Flask(__name__)
 
 @app.route('/')
