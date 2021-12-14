@@ -1,32 +1,23 @@
 import requests
 from flask import Flask
-from Comment import Comment
+from flask import request
 import datetime
 
-url = 'http://localhost:8080/comment/'
+base_url = 'http://db-service:8080/comment'
 app = Flask(__name__)
 
-def get_comments(title):
-
-    print("Get all the comments!")
-    datas = requests.get(url+title).json()
-    comments = [Comment]
-    for data in datas:
-        comments.append(Comment(data['username'], data['content'], data['date']))
-
-    for comment in comments:
-        print(comment)
-
-
+@app.route('/', methods=['POST'])
 def post_comment():
     print("post comment to database!")
-    temp = Comment("Me","Phew, it pretty good!", datetime.datetime.now().strftime("%x"))
+    form_data = request.json
     payload = {
-        'username': temp.username,
-        'content': temp.content,
-        'date': temp.date
+        'recipeId': form_data['recipeId'],
+        'comment': form_data['comment'],
+        'userName': form_data['userName']
     }
-    print(requests.post(url+"add", json=payload).json())
+    data = requests.post(base_url + '/add', json=payload).json()
+    print(data)
+    return data
 
 @app.route('/')
 def hello():
