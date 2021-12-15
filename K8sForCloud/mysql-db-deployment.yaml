@@ -31,7 +31,7 @@ spec:
               value: cookbook
             - name: MYSQL_ROOT_PASSWORD
               value: root
-          image: index.docker.io/mysql
+          image: 853670914791.dkr.ecr.eu-central-1.amazonaws.com/homework:latest
           imagePullPolicy: IfNotPresent
           name: mysql-db
           ports:

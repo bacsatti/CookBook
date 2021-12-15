@@ -10,8 +10,11 @@ spec:
   storageClassName: ""
   accessModes:
     - ReadWriteOnce
-  volumeName: homework
   resources:
     requests:
       storage: 100Mi
+  volumes:
+    - name: my-configmap
+      configMap:
+        name: mysql-db-configmap
 status: {}
