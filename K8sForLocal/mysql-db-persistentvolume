@@ -12,10 +12,10 @@ spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 50Mi
+    storage: 100Mi
   persistentVolumeReclaimPolicy: Recycle
   hostPath:
-    path: ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    path: init.sql
   nodeAffinity:
     required:
       nodeSelectorTerms:
